@@ -11,11 +11,30 @@ function App() {
     setVegList((prevVegList) => [...prevVegList, vegItem]);
   }
 
-  const handleBuy = (index) => {
+  const handleBuy = (index, quantityToBuy) => {
     const updatedList = [...vegList];
-    updatedList[index].quantity += 1;
-    setVegList(vegList);
+
+    if (index >= 0 && index < updatedList.length && quantityToBuy > 0) {
+      const item = updatedList[index];
+
+      if (item.quantity >= quantityToBuy) {
+        item.quantity -= quantityToBuy;
+      } else {
+        alert('Not enough quantity available');
+        return;
+      }
+
+      if (item.quantity <= 0) {
+        updatedList.splice(index, 1);
+      }
+
+      setVegList(updatedList);
+    } else {
+      alert('Invalid operation');
+    }
   }
+
+
 
   const handleDelete = (index) => {
     const updatedList = vegList.filter((_, i) => i != index);

@@ -5,17 +5,16 @@ export default function VegetablesList({ vegList, onBuy, onDelete, onQuantityCha
     return (
         <ul>
             {
-                vegList.map((item, index) => {
+                vegList.map((item, index) => (
                     <VegetablesItems
                         key={index}
-                        item={item}
-                        onBuy={() => onBuy(index)}
+                        items={item}
+                        onBuy={(quantity) => onBuy(index, quantity)}
                         onDelete={() => onDelete(index)}
                         onQuantityChange={(value) => onQuantityChange(index, value)}
                     />
-                })
+                ))
             }
-
         </ul>
-    )
+    );
 }
