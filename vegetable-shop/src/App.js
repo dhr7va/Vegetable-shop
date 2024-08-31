@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import AddVegetablesForm from "./components/AddVegetablesForm/AddVegetablesForm";
 import VegetablesList from "./components/VegetablesList/VegetablesList";
-
+import TotalDisplay from "./components/TotalDisplay/TotalDisplay";
 
 function App() {
   const [vegList, setVegList] = useState([]);
+  const [total, setTotal] = useState(0);
 
   const addToShopHandler = (vegItem) => {
-    console.log('Adding vegetable:', vegItem);
     setVegList((prevVegList) => [...prevVegList, vegItem]);
+    setTotal(total + 1);
   }
 
   const handleBuy = (index, quantityToBuy) => {
@@ -26,6 +27,7 @@ function App() {
 
       if (item.quantity <= 0) {
         updatedList.splice(index, 1);
+        setTotal(total - 1);
       }
 
       setVegList(updatedList);
@@ -39,6 +41,8 @@ function App() {
   const handleDelete = (index) => {
     const updatedList = vegList.filter((_, i) => i != index);
     setVegList(updatedList);
+    setTotal(total - 1);
+
   }
 
   const handleQuantityChange = (index, value) => {
@@ -63,6 +67,7 @@ function App() {
         onQuantityChange={handleQuantityChange}
 
       />
+      <TotalDisplay total={total} />
     </>
   );
 }
